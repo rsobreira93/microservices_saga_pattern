@@ -7,14 +7,14 @@ threads = []
 def build_application(app):
     threads.append(app)
     print("Building application {}".format(app))
-    os.system("cd {} && gradle build -x test".format(app))
+    os.system("cd {} && ./gradlew build -x test".format(app))
     print("Application {} finished building!".format(app))
     threads.remove(app)
 
 
 def docker_compose_up():
     print("Running containers!")
-    os.popen("docker-compose up --build -d").read()
+    os.popen("docker compose up --build -d").read()
     print("Pipeline finished!")
 
 
@@ -34,16 +34,13 @@ def build_all_applications():
 
 def remove_remaining_containers():
     print("Removing all containers.")
-    os.system("docker-compose down")
-    containers = os.popen('docker ps -aq').read().split('\n')
-    containers.remove('')
-    if len(containers) > 0:
-        print("There are still {} containers created".format(containers))
-        for container in containers:
-            print("Stopping container {}".format(container))
-            os.system("docker container stop {}".format(container))
-        os.system("docker container prune -f")
+    print("Removing docker-compose containers...")
+    exit_code = os.system("docker compose down -v --remove-orphans")
 
+    if exit_code == 0:
+        print("Docker-compose containers removed successfully.")
+    else:
+        print("Error while removing docker-compose containers.")
 
 if __name__ == "__main__":
     print("Pipeline started!")
