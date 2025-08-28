@@ -1,8 +1,5 @@
 package br.com.microservices.orchestrated.inventoryservice.core.dtos;
 
-
-import br.com.microservices.orchestrated.orchestratorservice.core.dtos.OrderProducts;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

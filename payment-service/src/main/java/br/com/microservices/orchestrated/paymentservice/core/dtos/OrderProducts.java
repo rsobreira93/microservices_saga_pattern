@@ -1,8 +1,6 @@
 package br.com.microservices.orchestrated.paymentservice.core.dtos;
 
 
-import br.com.microservices.orchestrated.productvalidationservice.core.dtos.Product;
-
 public class OrderProducts {
 
     private Product product;
