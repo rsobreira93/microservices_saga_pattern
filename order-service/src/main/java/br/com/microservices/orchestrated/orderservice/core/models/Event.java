@@ -1,10 +1,15 @@
 package br.com.microservices.orchestrated.orderservice.core.models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Document("events")
 public class Event {
 
+    @Id
     private String id;
     private String transactionId;
     private String orderId;
