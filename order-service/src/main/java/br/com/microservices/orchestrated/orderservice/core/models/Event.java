@@ -44,6 +44,10 @@ public class Event {
         this.createAt = builder.createAt;
     }
 
+    public static Event.Builder builder() {
+        return new Event.Builder();
+    }
+
     public String getId() {
         return id;
     }

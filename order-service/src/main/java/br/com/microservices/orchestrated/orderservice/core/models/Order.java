@@ -43,6 +43,10 @@ public class Order {
         this.transactionId = builder.transactionId;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public String getId() {
         return id;
     }
