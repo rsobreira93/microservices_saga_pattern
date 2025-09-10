@@ -51,12 +51,12 @@ public class EventService {
     }
 
     private Event findByOrderId(String orderId) {
-        return eventRepository.findTop1byOrderIdOderByCreatedAtDesc(orderId)
+        return eventRepository.findTop1ByOrderIdOrderByCreatedAtDesc(orderId)
                 .orElseThrow(() -> new NotFoundException("Event not found by orderId."));
     }
 
     private Event findByTransactionId(String transactionId) {
-        return eventRepository.findTop1byTransactionIdOderByCreatedAtDesc(transactionId)
+        return eventRepository.findTop1ByTransactionIdOrderByCreatedAtDesc(transactionId)
                 .orElseThrow(() -> new NotFoundException("Event not found by transactionId."));
     }
 
