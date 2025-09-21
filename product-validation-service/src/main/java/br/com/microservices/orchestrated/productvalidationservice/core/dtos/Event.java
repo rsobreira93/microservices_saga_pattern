@@ -1,9 +1,12 @@
 package br.com.microservices.orchestrated.productvalidationservice.core.dtos;
 
 import br.com.microservices.orchestrated.productvalidationservice.core.enums.ESagaStatus;
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class Event {
 
@@ -39,6 +42,14 @@ public class Event {
         this.status = builder.status;
         this.eventList = builder.eventList;
         this.createAt = builder.createAt;
+    }
+
+    public void addToHistory(History history) {
+        if(isEmpty(eventList)) {
+            eventList = new ArrayList<>();
+        }
+
+        eventList.add(history);
     }
 
     public String getId() {

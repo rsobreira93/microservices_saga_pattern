@@ -21,7 +21,7 @@ public class Validation {
     @Column(nullable = false)
     private boolean success;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)

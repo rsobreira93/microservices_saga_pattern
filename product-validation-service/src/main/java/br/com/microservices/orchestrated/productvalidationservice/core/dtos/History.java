@@ -1,5 +1,6 @@
 package br.com.microservices.orchestrated.productvalidationservice.core.dtos;
 
+import br.com.microservices.orchestrated.productvalidationservice.core.entities.Validation;
 import br.com.microservices.orchestrated.productvalidationservice.core.enums.ESagaStatus;
 
 import java.time.LocalDateTime;
@@ -92,5 +93,9 @@ public class History {
         public History build() {
             return new History(this);
         }
+    }
+
+    public static History.Builder builder() {
+        return new History.Builder();
     }
 }
