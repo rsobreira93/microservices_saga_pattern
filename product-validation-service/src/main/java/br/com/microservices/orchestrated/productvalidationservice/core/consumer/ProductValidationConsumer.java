@@ -2,6 +2,8 @@ package br.com.microservices.orchestrated.productvalidationservice.core.consumer
 
 
 import br.com.microservices.orchestrated.productvalidationservice.core.dtos.Event;
+import br.com.microservices.orchestrated.productvalidationservice.core.dtos.Product;
+import br.com.microservices.orchestrated.productvalidationservice.core.services.ProductValidationService;
 import br.com.microservices.orchestrated.productvalidationservice.core.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +14,12 @@ import org.springframework.stereotype.Component;
 public class ProductValidationConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(ProductValidationConsumer.class);
 
+    private final ProductValidationService productValidationService;
     private final JsonUtil jsonUtil;
 
-    public ProductValidationConsumer(JsonUtil jsonUtil) {
+    public ProductValidationConsumer(JsonUtil jsonUtil, ProductValidationService productValidationService) {
         this.jsonUtil = jsonUtil;
+        this.productValidationService = productValidationService;
     }
 
     @KafkaListener(
@@ -26,8 +30,7 @@ public class ProductValidationConsumer {
         LOG.info("Receiving success event from event {} from product-validation-success topic", payload);
 
         Event event = jsonUtil.toEvent(payload);
-
-        LOG.info(event.toString());
+        productValidationService.validateExistsProducts(event);
 
     }
 
@@ -40,7 +43,7 @@ public class ProductValidationConsumer {
 
         Event event = jsonUtil.toEvent(payload);
 
-        LOG.info(event.toString());
+        productValidationService.rollbackEvent(event);
 
     }
 
