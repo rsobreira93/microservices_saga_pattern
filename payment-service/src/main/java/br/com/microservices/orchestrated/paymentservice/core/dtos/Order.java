@@ -66,6 +66,26 @@ public class Order {
         this.transactionId = transactionId;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setProducts(List<OrderProducts> products) {
+        this.products = products;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public void setTotalItems(int totalItems) {
+        this.totalItems = totalItems;
+    }
+
     public static class Builder {
         private String id;
         private List<OrderProducts> products;
