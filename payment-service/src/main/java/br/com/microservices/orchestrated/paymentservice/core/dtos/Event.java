@@ -1,9 +1,13 @@
 package br.com.microservices.orchestrated.paymentservice.core.dtos;
 
 import br.com.microservices.orchestrated.paymentservice.core.enums.ESagaStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 public class Event {
 
@@ -14,6 +18,7 @@ public class Event {
     private String source;
     private ESagaStatus status;
     private List<History> eventList;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SS")
     private LocalDateTime createAt;
 
     public Event() {
@@ -39,6 +44,14 @@ public class Event {
         this.status = builder.status;
         this.eventList = builder.eventList;
         this.createAt = builder.createAt;
+    }
+
+    public void addToHistory(History history) {
+        if(isEmpty(eventList)) {
+            eventList = new ArrayList<>();
+        }
+
+        eventList.add(history);
     }
 
     public String getId() {
