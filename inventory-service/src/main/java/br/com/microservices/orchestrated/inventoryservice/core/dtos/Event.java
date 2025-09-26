@@ -3,7 +3,10 @@ package br.com.microservices.orchestrated.inventoryservice.core.dtos;
 import br.com.microservices.orchestrated.inventoryservice.core.enums.ESagaStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 public class Event {
 
@@ -15,6 +18,15 @@ public class Event {
     private ESagaStatus status;
     private List<History> eventList;
     private LocalDateTime createAt;
+
+    public void addToHistory(History history) {
+        if(isEmpty(eventList)) {
+            eventList = new ArrayList<>();
+        }
+
+        eventList.add(history);
+    }
+
 
     public Event() {
     }

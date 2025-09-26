@@ -2,6 +2,7 @@ package br.com.microservices.orchestrated.inventoryservice.core.consumer;
 
 
 import br.com.microservices.orchestrated.inventoryservice.core.dtos.Event;
+import br.com.microservices.orchestrated.inventoryservice.core.services.InventoryService;
 import br.com.microservices.orchestrated.inventoryservice.core.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,11 @@ public class InventoryConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(InventoryConsumer.class);
 
     private final JsonUtil jsonUtil;
+    private final InventoryService inventoryService;
 
-    public InventoryConsumer(JsonUtil jsonUtil) {
+    public InventoryConsumer(JsonUtil jsonUtil, InventoryService inventoryService) {
         this.jsonUtil = jsonUtil;
+        this.inventoryService = inventoryService;
     }
 
     @KafkaListener(
@@ -27,7 +30,7 @@ public class InventoryConsumer {
 
         Event event = jsonUtil.toEvent(payload);
 
-        LOG.info(event.toString());
+        inventoryService.updateInventory(event);
 
     }
 
@@ -40,7 +43,7 @@ public class InventoryConsumer {
 
         Event event = jsonUtil.toEvent(payload);
 
-        LOG.info(event.toString());
+        inventoryService.rollbackInventory(event);
 
     }
 

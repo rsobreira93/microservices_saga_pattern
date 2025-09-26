@@ -63,6 +63,10 @@ public class History {
         this.status = status;
     }
 
+    public static History.Builder builder() {
+        return new History.Builder();
+    }
+
     public static class Builder {
         private String source;
         private ESagaStatus status;
