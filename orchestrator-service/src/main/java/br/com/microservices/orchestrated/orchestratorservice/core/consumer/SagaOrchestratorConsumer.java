@@ -2,6 +2,7 @@ package br.com.microservices.orchestrated.orchestratorservice.core.consumer;
 
 
 import br.com.microservices.orchestrated.orchestratorservice.core.dtos.Event;
+import br.com.microservices.orchestrated.orchestratorservice.core.services.OrchestrationService;
 import br.com.microservices.orchestrated.orchestratorservice.core.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,11 @@ public class SagaOrchestratorConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(SagaOrchestratorConsumer.class);
 
     private final JsonUtil jsonUtil;
+    private final OrchestrationService orchestrationService;
 
-    public SagaOrchestratorConsumer(JsonUtil jsonUtil) {
+    public SagaOrchestratorConsumer(JsonUtil jsonUtil, OrchestrationService orchestrationService) {
         this.jsonUtil = jsonUtil;
+        this.orchestrationService = orchestrationService;
     }
 
     @KafkaListener(
@@ -27,7 +30,7 @@ public class SagaOrchestratorConsumer {
 
         Event event = jsonUtil.toEvent(payload);
 
-        LOG.info(event.toString());
+        orchestrationService.startSaga(event);
 
     }
 
@@ -40,7 +43,7 @@ public class SagaOrchestratorConsumer {
 
         Event event = jsonUtil.toEvent(payload);
 
-        LOG.info(event.toString());
+        orchestrationService.continueSaga(event);
 
     }
 
@@ -53,7 +56,7 @@ public class SagaOrchestratorConsumer {
 
         Event event = jsonUtil.toEvent(payload);
 
-        LOG.info(event.toString());
+       orchestrationService.finishSagaSuccess(event);
 
     }
 
@@ -66,7 +69,7 @@ public class SagaOrchestratorConsumer {
 
         Event event = jsonUtil.toEvent(payload);
 
-        LOG.info(event.toString());
+        orchestrationService.finishSagaFail(event);
 
     }
 }
