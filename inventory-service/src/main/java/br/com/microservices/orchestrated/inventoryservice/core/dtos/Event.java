@@ -16,26 +16,26 @@ public class Event {
     private Order payload;
     private String source;
     private ESagaStatus status;
-    private List<History> eventList;
+    private List<History> eventHistory;
     private LocalDateTime createAt;
 
-    public void addToHistory(History history) {
-        if(isEmpty(eventList)) {
-            eventList = new ArrayList<>();
+    public void addHistory(History history) {
+        if(isEmpty(eventHistory)) {
+            eventHistory = new ArrayList<>();
         }
 
-        eventList.add(history);
+        eventHistory.add(history);
     }
 
 
     public Event() {
     }
 
-    public Event(String id, LocalDateTime createAt, ESagaStatus status, List<History> eventList, String source, Order payload, String orderId, String transactionId) {
+    public Event(String id, LocalDateTime createAt, ESagaStatus status, List<History> eventHistory, String source, Order payload, String orderId, String transactionId) {
         this.id = id;
         this.createAt = createAt;
         this.status = status;
-        this.eventList = eventList;
+        this.eventHistory = eventHistory;
         this.source = source;
         this.payload = payload;
         this.orderId = orderId;
@@ -49,7 +49,7 @@ public class Event {
         this.payload = builder.payload;
         this.source = builder.source;
         this.status = builder.status;
-        this.eventList = builder.eventList;
+        this.eventHistory = builder.eventHistory;
         this.createAt = builder.createAt;
     }
 
@@ -69,12 +69,12 @@ public class Event {
         this.createAt = createAt;
     }
 
-    public List<History> getEventList() {
-        return eventList;
+    public List<History> getEventHistory() {
+        return eventHistory;
     }
 
-    public void setEventList(List<History> eventList) {
-        this.eventList = eventList;
+    public void setEventHistory(List<History> eventHistory) {
+        this.eventHistory = eventHistory;
     }
 
     public ESagaStatus getStatus() {
@@ -124,7 +124,7 @@ public class Event {
         private Order payload;
         private String source;
         private ESagaStatus status;
-        private List<History> eventList;
+        private List<History> eventHistory;
         private LocalDateTime createAt;
 
         public Builder id(String id) {
@@ -157,8 +157,8 @@ public class Event {
             return this;
         }
 
-        public Builder eventList(List<History> eventList) {
-            this.eventList = eventList;
+        public Builder eventHistory(List<History> eventHistory) {
+            this.eventHistory = eventHistory;
             return this;
         }
 

@@ -16,17 +16,17 @@ public class Event {
     private Order payload;
     private String source;
     private String status;
-    private List<History> eventList;
+    private List<History> eventHistory;
     private LocalDateTime createdAt;
 
     public Event() {
     }
 
-    public Event(String id, LocalDateTime createdAt, String status, List<History> eventList, String source, Order payload, String orderId, String transactionId) {
+    public Event(String id, LocalDateTime createdAt, String status, List<History> eventHistory, String source, Order payload, String orderId, String transactionId) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
-        this.eventList = eventList;
+        this.eventHistory = eventHistory;
         this.source = source;
         this.payload = payload;
         this.orderId = orderId;
@@ -40,7 +40,7 @@ public class Event {
         this.payload = builder.payload;
         this.source = builder.source;
         this.status = builder.status;
-        this.eventList = builder.eventList;
+        this.eventHistory = builder.eventHistory;
         this.createdAt = builder.createdAt;
     }
 
@@ -64,12 +64,12 @@ public class Event {
         this.createdAt = createdAt;
     }
 
-    public List<History> getEventList() {
-        return eventList;
+    public List<History> getEventHistory() {
+        return eventHistory;
     }
 
-    public void setEventList(List<History> eventList) {
-        this.eventList = eventList;
+    public void setEventHistory(List<History> eventHistory) {
+        this.eventHistory = eventHistory;
     }
 
     public String getStatus() {
@@ -119,7 +119,7 @@ public class Event {
         private Order payload;
         private String source;
         private String status;
-        private List<History> eventList;
+        private List<History> eventHistory;
         private LocalDateTime createdAt;
 
         public Builder id(String id) {
@@ -152,8 +152,8 @@ public class Event {
             return this;
         }
 
-        public Builder eventList(List<History> eventList) {
-            this.eventList = eventList;
+        public Builder eventHistory(List<History> eventHistory) {
+            this.eventHistory = eventHistory;
             return this;
         }
 

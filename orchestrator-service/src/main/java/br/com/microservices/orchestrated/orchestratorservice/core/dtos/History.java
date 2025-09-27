@@ -94,4 +94,8 @@ public class History {
             return new History(this);
         }
     }
+
+    public static History.Builder builder() {
+        return new History.Builder();
+    }
 }
