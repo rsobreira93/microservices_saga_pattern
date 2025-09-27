@@ -89,13 +89,13 @@ public class ProductValidationService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        event.addToHistory(history);
+        event.addHistory(history);
     }
 
     private void createValidation(Event event, boolean success) {
         Validation validation = Validation.builder()
                 .orderId(event.getPayload().getId())
-                .transactionId(event.getPayload().getTransactionId())
+                .transactionId(event.getTransactionId())
                 .success(success)
                 .build();
 
@@ -121,7 +121,7 @@ public class ProductValidationService {
             throw  new ValidationException("Product list is empty.");
         }
 
-        if(isEmpty(event.getPayload().getId()) || isEmpty(event.getPayload().getTransactionId())) {
+        if(isEmpty(event.getPayload().getId()) || isEmpty(event.getTransactionId())) {
             throw  new ValidationException("OrderId and TransactionId  must be informed!.");
         }
     }

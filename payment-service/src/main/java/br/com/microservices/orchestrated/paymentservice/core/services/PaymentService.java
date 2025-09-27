@@ -73,7 +73,7 @@ public class PaymentService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        event.addToHistory(history);
+        event.addHistory(history);
     }
 
     private void changePaymentToSuccess(Payment payment) {
@@ -116,12 +116,9 @@ public class PaymentService {
     }
 
     private void checkCurrentValidation(Event event) {
-        if(paymentRepository.existsByOrderIdAndTransactionId(
-                event.getPayload().getId(), event.getTransactionId()
-        )){
+        if (paymentRepository.existsByOrderIdAndTransactionId(event.getPayload().getId(), event.getTransactionId())) {
             throw new ValidationException("There's another transactionId for this validation.");
         }
-
     }
 
     private void validateAmount(double amount) {

@@ -120,7 +120,7 @@ public class InventoryService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        event.addToHistory(history);
+        event.addHistory(history);
     }
 
     private void createOrderInventory(Event event) {
