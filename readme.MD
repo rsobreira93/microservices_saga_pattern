@@ -101,7 +101,7 @@ Como queremos rodar apenas os serviços de bancos de dados e Message Broker, é 
 
 Para parar todos os containers, basta rodar:
 
-`docker-compose down`
+`docker compose down`
 
 Ou então: (**cuidado**)
 
