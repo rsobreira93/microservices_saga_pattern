@@ -1,24 +1,26 @@
 server:
   port: 8092
-
 spring:
-
+  application:
+    name: inventory-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5434}/${DB_NAME:inventory-db}
-    username: ${DB_USER:admin}
-    password: ${DB_PASSWORD:admin}
-
-
+    url: >-
+      jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5434}/${DB_NAME:inventory-db}
+    username: '${DB_USER:admin}'
+    password: '${DB_PASSWORD:admin}'
   jpa:
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
   kafka:
-    bootstrap-servers: ${KAFKA_BROKER:kafka:29092}
+    bootstrap-servers: '${KAFKA_BROKER:kafka:29092}'
+    listener:
+      observation-enabled: true
+      template:
+        observation-enabled: true
     topic:
       orchestrator: orchestrator
       inventory-success: inventory-success
@@ -26,9 +28,19 @@ spring:
     consumer:
       group-id: inventory-group
       auto-offset-reset: latest
-
 logging:
   level:
+    root: INFO
     org:
       apache:
-        kafka: OFF
+        kafka: 'OFF'
+  pattern:
+    console: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+management:
+  tracing:
+    sampling:
+      probability: 1
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans

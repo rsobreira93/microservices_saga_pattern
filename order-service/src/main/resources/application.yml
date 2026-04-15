@@ -1,15 +1,18 @@
 server:
   port: 3000
-
-
 spring:
+  application:
+    name: order-service
   data:
     mongodb:
-        database: admin
-        uri: ${MONGO_DB_URI:mongodb://admin:admin@localhost:27017}
-
+      database: admin
+      uri: '${MONGO_DB_URI:mongodb://admin:admin@localhost:27017}'
   kafka:
-    bootstrap-servers: ${KAFKA_BROKER:kafka:29092}
+    bootstrap-servers: '${KAFKA_BROKER:kafka:29092}'
+    listener:
+      observation-enabled: true
+      template:
+        observation-enabled: true
     topic:
       start-saga: start-saga
       notify-ending: notify-ending
@@ -17,8 +20,18 @@ spring:
       group-id: order-group
       auto-offset-reset: latest
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+
 logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
   level:
     org:
       apache:
-        kafka: OFF
+        kafka: 'OFF'

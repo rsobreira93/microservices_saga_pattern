@@ -87,12 +87,22 @@ services:
     depends_on:
       - "kafka"
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - orchestrator-saga
+    environment:
+      JAVA_OPTS: "-Xms1024m -Xmx2048m -XX:+ExitOnOutOfMemoryError"
   order-service:
     build: './order-service'
     container_name: order-service
     depends_on:
       - order-db
       - kafka
+      - zipkin
     networks:
       - orchestrator-saga
     environment:
@@ -106,6 +116,7 @@ services:
     container_name: orchestrator-service
     depends_on:
       - kafka
+      - zipkin
     networks:
       - orchestrator-saga
     environment:
@@ -119,6 +130,7 @@ services:
     depends_on:
       - product-db
       - kafka
+      - zipkin
     networks:
       - orchestrator-saga
     environment:
@@ -137,6 +149,7 @@ services:
     depends_on:
       - payment-db
       - kafka
+      - zipkin
     networks:
       - orchestrator-saga
     environment:
@@ -155,6 +168,7 @@ services:
     depends_on:
       - inventory-db
       - kafka
+      - zipkin
     networks:
       - orchestrator-saga
     environment:

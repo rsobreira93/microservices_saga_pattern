@@ -1,9 +1,14 @@
 server:
   port: 8080
-
 spring:
+  application:
+    name: orchestrator-service
   kafka:
-    bootstrap-servers: ${KAFKA_BROKER:kafka:29092}
+    bootstrap-servers: '${KAFKA_BROKER:kafka:29092}'
+    listener:
+      observation-enabled: true
+      template:
+        observation-enabled: true
     topic:
       start-saga: start-saga
       orchestrator: orchestrator
@@ -12,9 +17,19 @@ spring:
     consumer:
       group-id: orchestrator-group
       auto-offset-reset: latest
-
 logging:
   level:
+    root: INFO
     org:
       apache:
-        kafka: OFF
+        kafka: 'OFF'
+  pattern:
+    console: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+management:
+  tracing:
+    sampling:
+      probability: 1
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
